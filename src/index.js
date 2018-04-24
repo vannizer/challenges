@@ -3,6 +3,9 @@ import { render } from 'react-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import App from './App'
+import { add } from './helpers'
+import { init } from './utils/api'
+import './main-css'
 
 const store = createStore(function(state, action) {
   const _state =
@@ -16,7 +19,7 @@ const store = createStore(function(state, action) {
   switch (action.type) {
     case 'UPDATE_TOTAL_DONATE':
       return Object.assign({}, _state, {
-        donate: _state.donate + action.amount,
+        donate: add(_state.donate, action.amount),
       })
     case 'UPDATE_MESSAGE':
       return Object.assign({}, _state, {
@@ -27,6 +30,8 @@ const store = createStore(function(state, action) {
       return _state
   }
 })
+
+init()
 
 render(
   <Provider store={store}>
