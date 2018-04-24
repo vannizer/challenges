@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import Button from '../../../components/Button'
-import { Regular } from '../../../components/Typo'
-import Toggle from '../../../components/Toggle'
-import Card from '../../../components/Card'
+import Button from '../../components/Button'
+import { Regular } from '../../components/Typo'
+import Toggle from '../../components/Toggle'
+import Card from '../../components/Card'
 import {
   CampaignImage,
   ContentSection,

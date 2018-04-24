@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Regular } from '../../../components/Typo'
+import { Regular } from '../../components/Typo'
 
 // #region Common
 export const CampaignImage = styled.div`

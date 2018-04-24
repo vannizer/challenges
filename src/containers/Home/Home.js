@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import CharityCard from './CharityCard'
+import CharityCard from '../CharityCard'
 import { Title1 } from '../../components/Typo'
 import {
   Container,
