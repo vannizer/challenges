@@ -5,3 +5,11 @@ export const add = (...args) =>
 
 export const summaryDonations = danations =>
   danations.filter(isNotEmpty).reduce((acc, curr) => add(acc, curr))
+
+export const toSlug = str =>
+  str
+    .trim()
+    .toLowerCase()
+    .split(' ')
+    .join('-')
+    .replace(/--+/g, '-') // replace multiple hyphen to one

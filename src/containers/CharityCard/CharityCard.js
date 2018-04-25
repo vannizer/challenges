@@ -15,6 +15,7 @@ import {
   InnerModalTitle,
   CloseToggleButton,
 } from './styled'
+import { toSlug } from '../../helpers'
 
 const CHOICES = [
   {
@@ -53,12 +54,12 @@ export default class CharityCard extends React.PureComponent {
   }
 
   render() {
-    const { id, name, currency, submit, backgroundUrl } = this.props
+    const { id, name, currency, submit, backgroundUrl, onToggle } = this.props
     const { selectedAmount } = this.state
 
     return (
       <Card>
-        <Toggle>
+        <Toggle onToggle={onToggle}>
           {({ on, toggle }) => (
             <Fragment>
               <InnerModalContainer show={on}>
@@ -68,19 +69,22 @@ export default class CharityCard extends React.PureComponent {
                     Select the amount to donate ({currency})
                   </InnerModalTitle>
                   <ChoicesContainer>
-                    {CHOICES.map(({ label, value }) => (
-                      <ChoiceGroup key={label}>
-                        <input
-                          type="radio"
-                          name={`payment-${name}`}
-                          id={`${name}-${label}`}
-                          value={value}
-                          checked={+selectedAmount === +value}
-                          onChange={this.selectAmount}
-                        />
-                        <Label htmlFor={`${name}-${label}`}>{label}</Label>
-                      </ChoiceGroup>
-                    ))}
+                    {CHOICES.map(({ label, value }) => {
+                      const inputId = toSlug(`${name}-${label}`)
+                      return (
+                        <ChoiceGroup key={label}>
+                          <input
+                            type="radio"
+                            name={toSlug(`payment-${name}`)}
+                            id={inputId}
+                            value={value}
+                            checked={+selectedAmount === +value}
+                            onClick={this.selectAmount}
+                          />
+                          <Label htmlFor={inputId}>{label}</Label>
+                        </ChoiceGroup>
+                      )
+                    })}
                   </ChoicesContainer>
                   <Button
                     outline
@@ -114,6 +118,7 @@ export default class CharityCard extends React.PureComponent {
 
 CharityCard.defaultProps = {
   submit: () => {},
+  onToggle: () => {},
 }
 
 CharityCard.propTypes = {
@@ -122,4 +127,5 @@ CharityCard.propTypes = {
   currency: PropTypes.string,
   submit: PropTypes.func,
   backgroundUrl: PropTypes.string,
+  onToggle: PropTypes.func,
 }
