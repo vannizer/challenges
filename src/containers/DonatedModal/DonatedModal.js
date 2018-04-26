@@ -8,13 +8,13 @@ import {
   Emoji,
 } from './styled'
 
-function DonatedModal({ amount, currency }) {
+function DonatedModal({ amount, currency, name }) {
   return (
     <DonatedContainer>
       <DonatedSection>
         <Emoji>🎉</Emoji>
         <DonationText>Thank you for your donations</DonationText>
-        <AmountNumber>
+        <AmountNumber data-testid={name}>
           {`${getSymbolFromCurrency(currency)} ${displayPrice(amount)}`}
         </AmountNumber>
       </DonatedSection>

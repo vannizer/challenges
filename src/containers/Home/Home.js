@@ -60,6 +60,7 @@ class Home extends React.PureComponent {
           <DonatedModal
             amount={latestDonations.amount}
             currency={latestDonations.currency}
+            name="donated-modal"
           />
         }
       >
