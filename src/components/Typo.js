@@ -3,7 +3,7 @@ import { colors } from '../constant'
 
 export const Title1 = styled.h1`
   color: ${colors.grey};
-  font-weight: 600;
+  font-weight: 500;
   font-size: 2.25rem;
   margin-bottom: 0.75rem;
 `

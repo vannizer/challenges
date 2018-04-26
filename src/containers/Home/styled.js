@@ -15,6 +15,31 @@ export const CharityLayout = styled.div`
   }
 `
 export const HeaderSection = styled.div`
-  margin-top: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2rem;
   text-align: center;
+
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-areas: '. title stat';
+  grid-template-columns: 1fr auto 1fr;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'title'
+      'stat';
+  }
+`
+export const TitleContainer = styled.div`
+  grid-area: title;
+`
+export const StatContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  grid-area: stat;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    justify-content: center;
+  }
 `

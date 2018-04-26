@@ -32,11 +32,6 @@ const ModalDialog = styled.div`
 
   max-width: 100vw;
 `
-// const ModalBody = styled.div`
-//   position: relative;
-//   min-width: 300px;
-//   min-height: 250px;
-// `
 const CloseButton = styled.button`
   border: 0;
   background-color: transparent;
@@ -54,8 +49,9 @@ const ModalUI = ({ children, close, visible }) => {
   return (
     <div>
       <ModalDialog visible={visible}>
-        <CloseButton onClick={close}>✕</CloseButton>
-        {/* <ModalBody>{children}</ModalBody> */}
+        <CloseButton onClick={close} data-testid="modal-close-button">
+          ✕
+        </CloseButton>
         {children}
       </ModalDialog>
       <Overlay onClick={close} visible={visible} />

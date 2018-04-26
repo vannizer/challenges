@@ -4,7 +4,7 @@ import { colors } from './constant'
 injectGlobal`
 html {
   box-sizing: border-box;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
   color: ${colors.black};
 }
@@ -15,7 +15,7 @@ html {
 
 input,
 textarea {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto', sans-serif;
   outline: none;
   font-size: 13px;
 }

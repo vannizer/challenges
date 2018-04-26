@@ -5,7 +5,14 @@ import CharityCard from '../CharityCard'
 import { Title1 } from '../../components/Typo'
 import Modal from '../../components/Modal'
 import DonatedModal from '../DonatedModal'
-import { Container, CharityLayout, HeaderSection } from './styled'
+import Statistic from '../../components/Statistic'
+import {
+  Container,
+  CharityLayout,
+  HeaderSection,
+  StatContainer,
+  TitleContainer,
+} from './styled'
 import { summaryDonations } from '../../helpers'
 import { charities, payments } from '../../utils/api'
 
@@ -59,14 +66,13 @@ class Home extends React.PureComponent {
         {({ open: openModal }) => (
           <Container>
             <HeaderSection>
-              <Title1>Omise Tamboon React</Title1>
+              <TitleContainer>
+                <Title1>Omise Tamboon React</Title1>
+              </TitleContainer>
+              <StatContainer>
+                <Statistic label="all donations" value={donate} />
+              </StatContainer>
             </HeaderSection>
-            <p>
-              All donations:
-              <span data-testid="all-donations" id="all-donations">
-                {donate}
-              </span>
-            </p>
 
             <CharityLayout>
               {charities.map(item => (
