@@ -1,35 +1,16 @@
-import fetch from 'isomorphic-fetch'
+import axios from 'axios'
 
 let api
 const REACT_APP_API_URL =
   process.env.REACT_APP_API_URL || 'http://localhost:3001'
 
-const cleanObj = obj => JSON.parse(JSON.stringify(obj))
-const getData = res => res.json()
+const getData = res => res.data
 
 const requests = {
-  delete: url =>
-    api({
-      method: 'DELETE',
-      url,
-    }).then(getData),
-  get: url =>
-    api({
-      method: 'GET',
-      url,
-    }).then(getData),
-  put: (url, body) =>
-    api({
-      method: 'PUT',
-      url,
-      body,
-    }).then(getData),
-  post: (url, body) =>
-    api({
-      method: 'POST',
-      url,
-      body,
-    }).then(getData),
+  delete: url => api.delete(url).then(getData),
+  get: url => api.get(url).then(getData),
+  put: (url, body) => api.put(url, body).then(getData),
+  post: (url, body) => api.post(url, body).then(getData),
 }
 
 const charities = {
@@ -45,19 +26,20 @@ const payments = {
   update: (id, payments) => requests.put(`/payments/${id}`, payments),
 }
 
-function init({ token = window.localStorage.getItem('token') } = {}) {
-  api = ({ url = '', body, ...options }) =>
-    fetch(
-      REACT_APP_API_URL + url,
-      cleanObj({
-        headers: {
-          authorization: token ? `Bearer ${token}` : undefined,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-        ...options,
-      }),
-    )
+function init({
+  token = window.localStorage.getItem('token'),
+  baseURL = (api && api.defaults.baseURL) || REACT_APP_API_URL,
+  axiosOptions = { headers: {} },
+} = {}) {
+  api = axios.create({
+    baseURL,
+    ...axiosOptions,
+    headers: {
+      authorization: token ? `Bearer ${token}` : undefined,
+      'Content-Type': 'application/json',
+      ...axiosOptions.headers,
+    },
+  })
 }
 
 export { init, charities, payments }
