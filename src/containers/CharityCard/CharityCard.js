@@ -49,12 +49,12 @@ export default class CharityCard extends React.PureComponent {
     this.setState({ selectedAmount: amount })
   }
 
-  reset = () => {
-    this.setState(this.initialState)
+  submit = amount => {
+    this.setState(this.initialState, () => this.props.onSubmit(amount))
   }
 
   render() {
-    const { id, name, currency, submit, backgroundUrl, onToggle } = this.props
+    const { name, currency, backgroundUrl, onToggle } = this.props
     const { selectedAmount } = this.state
 
     return (
@@ -90,9 +90,8 @@ export default class CharityCard extends React.PureComponent {
                     outline
                     disabled={!selectedAmount}
                     onClick={() => {
-                      submit({ id, amount: selectedAmount, currency })
+                      this.submit(selectedAmount)
                       toggle()
-                      this.reset()
                     }}
                   >
                     Pay
@@ -117,15 +116,14 @@ export default class CharityCard extends React.PureComponent {
 }
 
 CharityCard.defaultProps = {
-  submit: () => {},
   onToggle: () => {},
+  onSubmit: () => {},
 }
 
 CharityCard.propTypes = {
-  id: PropTypes.any,
   name: PropTypes.string,
   currency: PropTypes.string,
-  submit: PropTypes.func,
+  onSubmit: PropTypes.func,
   backgroundUrl: PropTypes.string,
   onToggle: PropTypes.func,
 }

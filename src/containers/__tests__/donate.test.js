@@ -27,7 +27,7 @@ test('calls submit and toggle when press pay button', () => {
   const handleSubmit = jest.fn()
 
   const { getByLabelText, getByText } = render(
-    <CharityCard submit={handleSubmit} onToggle={handleToggle} />,
+    <CharityCard onSubmit={handleSubmit} onToggle={handleToggle} />,
   )
   const payButton = getByText('pay', { selector: 'button' })
   const input10 = getByLabelText('10', { selector: 'input' })

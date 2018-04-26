@@ -18,10 +18,3 @@ export const HeaderSection = styled.div`
   margin-top: 2rem;
   text-align: center;
 `
-export const BroadcastMessage = styled.p`
-  color: red;
-  margin: 1rem 0;
-  font-weight: 500;
-  font-size: 1rem;
-  text-align: center;
-`

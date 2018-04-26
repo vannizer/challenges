@@ -12,19 +12,21 @@ const store = createStore(function(state, action) {
     state == null
       ? {
         donate: 0,
+        latestDonations: {},
         message: '',
       }
       : state
 
   switch (action.type) {
     case 'UPDATE_TOTAL_DONATE':
-      return Object.assign({}, _state, {
+      return {
+        ..._state,
         donate: add(_state.donate, action.amount),
-      })
-    case 'UPDATE_MESSAGE':
-      return Object.assign({}, _state, {
-        message: action.message,
-      })
+        latestDonations: {
+          amount: action.amount,
+          currency: action.currency,
+        },
+      }
 
     default:
       return _state

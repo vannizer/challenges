@@ -1,4 +1,11 @@
-import { summaryDonations, isNotEmpty, add, toSlug } from '../helpers'
+import {
+  summaryDonations,
+  isNotEmpty,
+  add,
+  toSlug,
+  getSymbolFromCurrency,
+  displayPrice,
+} from '../helpers'
 
 describe('helpers', () => {
   test('`summaryDonations` should calculate donations correctly', () => {
@@ -23,5 +30,17 @@ describe('helpers', () => {
     expect(toSlug('   I    am    Batman   ')).toBe('i-am-batman')
     expect(toSlug('I-AM-BATMAN')).toBe('i-am-batman')
     expect(toSlug('I- -AM- -BATMAN')).toBe('i-am-batman')
+  })
+
+  test('`getSymbolFromCurrency` should return correct symbol', () => {
+    expect(getSymbolFromCurrency('thb')).toBe('฿')
+    expect(getSymbolFromCurrency('THB')).toBe('฿')
+    expect(getSymbolFromCurrency('USD')).toBe('$')
+    expect(getSymbolFromCurrency('JPY')).toBe('¥')
+  })
+
+  test('`displayPrice` should return correct format', () => {
+    expect(displayPrice(1000000)).toBe('1,000,000')
+    expect(displayPrice('1000000')).toBe('1,000,000')
   })
 })
