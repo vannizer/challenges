@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class Toggle extends React.PureComponent {
   state = { on: false }
@@ -20,6 +21,9 @@ class Toggle extends React.PureComponent {
 
 Toggle.defaultProps = {
   onToggle: () => {},
+}
+Toggle.propTypes = {
+  onToggle: PropTypes.func,
 }
 
 export default Toggle

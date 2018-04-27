@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 // #region UI
 const Overlay = styled.div`
@@ -96,5 +97,9 @@ export default class ModalManager extends React.Component {
 }
 ModalManager.defaultProps = {
   onClose: () => {},
+}
+ModalManager.propTypes = {
+  body: PropTypes.node,
+  onClose: PropTypes.func,
 }
 // #endregion

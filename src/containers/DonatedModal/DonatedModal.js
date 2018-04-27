@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { getSymbolFromCurrency, displayPrice } from '../../helpers'
 import {
   DonatedContainer,
@@ -20,6 +21,13 @@ function DonatedModal({ amount, currency, name, message }) {
       </DonatedSection>
     </DonatedContainer>
   )
+}
+
+DonatedModal.propTypes = {
+  amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  currency: PropTypes.string,
+  name: PropTypes.string,
+  message: PropTypes.string,
 }
 
 export default DonatedModal

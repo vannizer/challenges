@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { Small } from './Typo'
 import { colors } from '../constant'
 import { toSlug } from '../helpers'
@@ -24,6 +25,11 @@ function Statistic({ value, label }) {
       <LabelText>{label}</LabelText>
     </Container>
   )
+}
+
+Statistic.propTypes = {
+  value: PropTypes.node,
+  label: PropTypes.node,
 }
 
 export default Statistic
