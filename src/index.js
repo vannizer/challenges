@@ -27,6 +27,11 @@ const store = createStore(function(state, action) {
           currency: action.currency,
         },
       }
+    case 'UPDATE_MESSAGE':
+      return {
+        ...state,
+        message: action.message,
+      }
 
     default:
       return _state

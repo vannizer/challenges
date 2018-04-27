@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Small } from './Typo'
 import { colors } from '../constant'
-import { displayPrice } from '../helpers'
 import { toSlug } from '../helpers'
 
 const Container = styled.div`
@@ -21,7 +20,7 @@ const LabelText = styled(Small.withComponent('span'))`
 function Statistic({ value, label }) {
   return (
     <Container>
-      <ValueText data-testid={toSlug(label)}>{displayPrice(value)}</ValueText>
+      <ValueText data-testid={toSlug(label)}>{value}</ValueText>
       <LabelText>{label}</LabelText>
     </Container>
   )

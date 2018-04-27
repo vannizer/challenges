@@ -13,7 +13,7 @@ import {
   StatContainer,
   TitleContainer,
 } from './styled'
-import { summaryDonations } from '../../helpers'
+import { summaryDonations, displayPrice } from '../../helpers'
 import { charities, payments } from '../../utils/api'
 
 class Home extends React.PureComponent {
@@ -47,11 +47,15 @@ class Home extends React.PureComponent {
           amount,
           currency,
         })
+        this.props.dispatch({
+          type: 'UPDATE_MESSAGE',
+          message: 'Thanks for your donations!',
+        })
       })
   }
 
   render() {
-    const { donate, latestDonations } = this.props
+    const { donate, latestDonations, message } = this.props
     const { charities = [] } = this.state
 
     return (
@@ -60,6 +64,7 @@ class Home extends React.PureComponent {
           <DonatedModal
             amount={latestDonations.amount}
             currency={latestDonations.currency}
+            message={message}
             name="donated-modal"
           />
         }
@@ -71,7 +76,7 @@ class Home extends React.PureComponent {
                 <Title1>Omise Tamboon React</Title1>
               </TitleContainer>
               <StatContainer>
-                <Statistic label="all donations" value={donate} />
+                <Statistic label="all donations" value={displayPrice(donate)} />
               </StatContainer>
             </HeaderSection>
 
