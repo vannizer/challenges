@@ -13,12 +13,15 @@ import {
   StatContainer,
   TitleContainer,
 } from './styled'
-import { summaryDonations, displayPrice } from '../../helpers'
+import { add, summaryDonations, displayPrice } from '../../helpers'
 import { charities, payments } from '../../utils/api'
 
-class Home extends React.PureComponent {
+class Home extends React.Component {
   state = {
     charities: [],
+    donate: 0,
+    latestDonations: {},
+    message: null,
   }
 
   componentDidMount() {
@@ -26,11 +29,7 @@ class Home extends React.PureComponent {
       this.setState({ charities: data })
     })
     payments.get().then(data => {
-      this.props.dispatch({
-        type: 'UPDATE_TOTAL_DONATE',
-        amount: summaryDonations(data.map(item => item.amount)),
-        currency: data[0].currency,
-      })
+      this.setState({ donate: summaryDonations(data.map(item => item.amount)) })
     })
   }
 
@@ -42,21 +41,19 @@ class Home extends React.PureComponent {
         currency,
       })
       .then(() => {
-        this.props.dispatch({
-          type: 'UPDATE_TOTAL_DONATE',
-          amount,
-          currency,
-        })
-        this.props.dispatch({
-          type: 'UPDATE_MESSAGE',
+        this.setState(({ donate }) => ({
+          donate: add(donate, amount),
+          latestDonations: {
+            amount,
+            currency,
+          },
           message: 'Thanks for your donations!',
-        })
+        }))
       })
   }
 
   render() {
-    const { donate, latestDonations, message } = this.props
-    const { charities = [] } = this.state
+    const { charities = [], donate, latestDonations, message } = this.state
 
     return (
       <Modal
@@ -103,20 +100,6 @@ class Home extends React.PureComponent {
       </Modal>
     )
   }
-}
-
-Home.defaultProps = {
-  dispatch: () => {},
-  latestDonations: {},
-}
-
-Home.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  donate: PropTypes.number,
-  latestDonations: PropTypes.shape({
-    amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    currency: PropTypes.string,
-  }),
 }
 
 export default Home
