@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import CharityCard from '../CharityCard'
 import { Title1 } from '../../components/Typo'
@@ -10,16 +9,23 @@ import {
   Container,
   CharityLayout,
   HeaderSection,
-  StatContainer,
-  TitleContainer,
+  StatCard,
+  StatSection,
 } from './styled'
-import { add, summaryDonations, displayPrice } from '../../helpers'
+import {
+  add,
+  summaryDonations,
+  displayPrice,
+  getSymbolFromCurrency,
+  groupBy,
+  mapValues,
+} from '../../helpers'
 import { charities, payments } from '../../utils/api'
 
 class Home extends React.Component {
   state = {
     charities: [],
-    donate: 0,
+    donations: {},
     latestDonations: {},
     message: null,
   }
@@ -28,23 +34,34 @@ class Home extends React.Component {
     charities.get().then(data => {
       this.setState({ charities: data })
     })
-    payments.get().then(data => {
-      this.setState({ donate: summaryDonations(data.map(item => item.amount)) })
+    payments.get().then((data = []) => {
+      const dataGroup = groupBy(data, 'currency')
+      const dataGroupSummary = mapValues(dataGroup, list =>
+        summaryDonations(list.map(obj => obj.amount)),
+      )
+
+      this.setState({
+        donations: dataGroupSummary,
+      })
     })
   }
 
   handlePay = ({ id, amount, currency }) => {
+    const ensureAmount = +amount
     payments
       .create({
         charitiesId: id,
-        amount,
+        amount: ensureAmount,
         currency,
       })
       .then(() => {
-        this.setState(({ donate }) => ({
-          donate: add(donate, amount),
+        this.setState(({ donations }) => ({
+          donations: {
+            ...donations,
+            [currency]: add(donations[currency], ensureAmount),
+          },
           latestDonations: {
-            amount,
+            amount: ensureAmount,
             currency,
           },
           message: 'Thanks for your donations!',
@@ -53,7 +70,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { charities = [], donate, latestDonations, message } = this.state
+    const { charities = [], latestDonations, message, donations } = this.state
 
     return (
       <Modal
@@ -69,13 +86,19 @@ class Home extends React.Component {
         {({ open: openModal }) => (
           <Container>
             <HeaderSection>
-              <TitleContainer>
-                <Title1>Omise Tamboon React</Title1>
-              </TitleContainer>
-              <StatContainer>
-                <Statistic label="all donations" value={displayPrice(donate)} />
-              </StatContainer>
+              <Title1>Omise Tamboon React</Title1>
             </HeaderSection>
+            <StatSection>
+              {Object.entries(donations).map(([currency, summary]) => (
+                <StatCard key={currency}>
+                  <Statistic
+                    label={`all donations in ${currency}`}
+                    value={displayPrice(summary)}
+                    unit={getSymbolFromCurrency(currency)}
+                  />
+                </StatCard>
+              ))}
+            </StatSection>
 
             <CharityLayout>
               {charities.map(item => (

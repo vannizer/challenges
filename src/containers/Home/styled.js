@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Card from '../../components/Card'
 import { breakpoints } from '../../constant'
 
 export const Container = styled.div`
@@ -16,30 +17,17 @@ export const CharityLayout = styled.div`
 `
 export const HeaderSection = styled.div`
   margin-top: 2.5rem;
-  margin-bottom: 2rem;
   text-align: center;
-
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-areas: '. title stat';
-  grid-template-columns: 1fr auto 1fr;
-
-  @media (max-width: ${breakpoints.tablet}) {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      'title'
-      'stat';
-  }
 `
-export const TitleContainer = styled.div`
-  grid-area: title;
-`
-export const StatContainer = styled.div`
+export const StatSection = styled.div`
   display: flex;
-  justify-content: flex-end;
-  grid-area: stat;
-
-  @media (max-width: ${breakpoints.tablet}) {
-    justify-content: center;
-  }
+  overflow-x: auto;
+  margin: 0.5rem -0.75rem;
+  padding: 0 0.5rem;
+`
+export const StatCard = styled(Card)`
+  min-width: 12.5rem;
+  padding: 1rem 0.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0.5rem;
 `

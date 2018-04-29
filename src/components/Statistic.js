@@ -17,11 +17,23 @@ const ValueText = styled.span`
 const LabelText = styled(Small.withComponent('span'))`
   text-transform: capitalize;
 `
+const UnitText = styled.span`
+  color: ${colors.primaryBlue};
+  font-size: 1.1875rem;
+  margin-right: 0.25rem;
+`
+const ValueRow = styled.div`
+  display: flex;
+  align-items: baseline;
+`
 
-function Statistic({ value, label }) {
+function Statistic({ value, label, unit }) {
   return (
     <Container>
-      <ValueText data-testid={toSlug(label)}>{value}</ValueText>
+      <ValueRow>
+        {unit != null ? <UnitText>{unit}</UnitText> : null}
+        <ValueText data-testid={toSlug(label)}>{value}</ValueText>
+      </ValueRow>
       <LabelText>{label}</LabelText>
     </Container>
   )
